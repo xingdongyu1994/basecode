@@ -264,7 +264,41 @@ var obj ={
     console.log("结果",this.name)
   }
 }
-var show = obj.showname
-var bindshowname = bind(show,obj)
-var pp = new bindshowname()
-console.log("，，，",pp)
+// var show = obj.showname
+// var bindshowname = bind(show,obj)
+// var pp = new bindshowname()
+// console.log("，，，",pp)
+
+
+//函数节流 debounce  throttle
+function debounce(func,delay,immediate) {
+  var timer = null
+  return function() {
+    var context = this
+    var args = arguments
+    if(timer) {
+      clearTimeout(timer)
+    }
+    if(immediate) {
+     var now = !timer
+     timer = setTimeout(function(){
+       timer = null
+     },delay)
+     if(now) {
+      func.apply(context,args)
+     }
+    } else {
+      timer = setTimeout(function(){
+        func.apply(context,args)
+      },delay)
+    }
+    
+  }
+}
+function resizechange () {
+  console.log("改变")
+}
+
+// window.onresize = debounce(resizechange, 5000,true);
+
+
