@@ -89,10 +89,182 @@ function merge(left, right) {
       newarr.push(temp)
     }
   }
-  
-  console.log("GGGGGGGGGGGGGGGGGGGGGGGGGGGGG",newarr)
   return newarr.concat(left.length?left:right)
 }
-var arr  =[3,2,1,6,0,8,5]
-console.log("结果",mergesort(arr))
-console.log("原数组",arr)
+
+
+//查找算法
+/**
+ * 1.二分查找
+ * 利用也是分而治之思想
+ */
+function binarySearch(data,item,start,end){
+     var end=end || data.length-1;
+     var start=start || 0;
+     var m=Math.floor((start+end)/2);
+     if(item==data[m]){
+         return m;
+     }else if(item<data[m]){
+         return binarySearch(data,item,start,m-1) //递归调用
+     }else{
+         return binarySearch(data,item,m+1,end);
+     }
+     return false;
+}
+function binarysearch2(arr, item){
+  var end = arr.length-1
+  var start = 0
+  while(start<=end) {
+    var m = Math.floor((end+start)/2)
+    if(arr[m] == item) {
+      return m
+    }
+    if(item > arr[m]) {
+      start = m+1
+    } else {
+      end = m-1
+    }
+  }
+  return false
+}
+
+
+
+//递归算法
+/**
+ *  n乘以(m-1)个n
+ */
+// 1.幂函数
+function power(base,power) {
+  var num=base
+  if(base ==1) {
+    return num
+  }
+  if(base == 0) {
+    return 1
+  }
+  for(var i=2; i<=power;i++) {
+     num = num*base
+  }
+  return num
+}
+function power2(n,m) {
+  if(m ==1) {
+    return n
+  }
+  return power2(n,m-1)*n
+}
+
+// 2.阶乘递归
+function foo(n) {
+  if(n==1){
+    return 1
+  }
+  return foo(n-1)*n
+}
+
+
+// 3.斐波纳契数列
+/**
+ * 1,1,2,3,5,8......
+ */
+function fib(n) {
+  if(n== 0) {
+    return 0
+  }else if(n==1) {
+    return 1
+  }else {
+    return fib(n-1)+fib(n-2)
+  }
+}
+// console.log("结果",fib(8))
+
+
+
+
+//事件绑定
+// 1. 事件绑定
+function eventfun(){
+  var lis = document.getElementsByTagName('li')
+  for(var i=0; i<lis.length; i++) {
+    (function(i) {
+       lis[i].addEventListener('click',function(){
+         console.log('结果',i)
+       })
+    })(i)
+  }
+}
+
+
+
+//数组去重
+// {}
+function unique(arr) {
+  var obj ={}
+  var res = []
+  for(var i=0; i<arr.length; i++) {
+    if(!obj[arr[i]]) {
+       res.push(arr[i])
+       obj[arr[i]] =1
+    }
+  }
+  return res
+}
+
+// var arr  =[1,5,2,3,1,2,3,6]
+// console.log("结果",unique(arr))
+
+
+//手写bind()
+/**
+ * 
+ * func 带绑定的函数
+ *  
+ */
+function bind(func,context) {
+  if(typeof func !== "function") {
+    throw new TypeError('Bind must be called on a function');
+  }
+  var args =Array.prototype.slice.call(arguments,2)
+  var bound = function() {
+    return createbound(func,bound,context,this,args.concat(Array.prototype.slice.call(arguments)))
+  }
+  return bound
+}
+function createbound(sourcefunc,boundfunc,context1,context,args) {
+    if(!(context instanceof boundfunc)) {
+       return  sourcefunc.apply(context1,args)
+    }
+    var self = basecreate(sourcefunc.prototype)
+    var result = sourcefunc.apply(self,args)
+    if(isobject(result)) {
+      return result
+    }
+    return self
+}
+var A = function() {}
+function basecreate(prototype) {
+   if(!isobject(prototype)) {
+     return {}
+   }
+   A.prototype = prototype
+   var result = new A;
+   A.prototype = null
+   return result
+}
+function isobject(obj) {
+  var  type = typeof obj
+  return type === 'function' || type === 'object' && !!obj
+}
+
+var name = "12"
+var obj ={
+  name:'333',
+  showname: function() {
+    console.log("结果",this.name)
+  }
+}
+var show = obj.showname
+var bindshowname = bind(show,obj)
+var pp = new bindshowname()
+console.log("，，，",pp)
