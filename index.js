@@ -301,4 +301,112 @@ function resizechange () {
 
 // window.onresize = debounce(resizechange, 5000,true);
 
+//编程
+// 1.两个升序数组中前n大的数
+function nmax(arr1,arr2,n) {
+  var result = []
+  var arr1len = arr1.length-1
+  var arr2len = arr2.length-1
+  if(n>arr1len+arr2len) {
+    return a.concat(b)
+  }
+  while(n>0) {
+    if(arr1[arr1len] > arr2[arr2len]) {
+      result.push(arr1[arr1len])
+      arr1len--
+    } else {
+      result.push(arr2[arr2len])
+      arr2len--
+    }
+    n--
+  }
+  return result
 
+}
+// 2.二维数组顺时针打印
+
+function printarr(arr) {
+  if(arr == null || arr.length ==0) {
+     return 
+  }
+  var result = []
+  var rows = arr.length //行
+  var cols = arr[0].length //列
+  var start =0
+  while(rows >start*2 && cols > start*2) {
+     var endx = cols - 1 -start
+     var endy = rows - 1 -start
+     //左到右
+     for(var i=start; i<=endx; i++) {
+        result.push(arr[start][i])
+     }
+     //从上到下
+     if(start<endy) {
+       for(var i=start+1; i<=endy; i++) {
+        result.push(arr[i][endy])
+       }
+     }
+     //从右到左
+     if(start<endy && start <endx) {
+      for(var i= endx-1; i>=start; i--) {
+        result.push(arr[endy][i])
+      }
+     }
+     //从下到上
+     if(start<endx && start<endy-1) {
+      for(var i= endy-1; i>=start+1; i--) {
+        result.push(arr[i][start])
+       }
+     }
+     
+    start++
+  }
+  return result
+}
+// console.log("结果",printarr(arr))
+
+
+//3.斜对角打印数组
+/**
+ * 斜对角打印
+ * 分为两部分  右上部分  左下部分  
+ * 右上部分就是列数--
+ * 做下部分就是行数++
+ */
+
+function printarr2(arr,n) {
+  //右上部分
+  var result = []
+  for(var i=n-1;i>=0; i--) {
+    var rows = 0
+    var cols = i
+    while((rows<n&& rows>=0) && (cols<n && cols>=0)) {
+      result.push(arr[rows][cols])
+      rows++
+      cols++
+    }
+  }
+  //打印下部分
+  for(var i=1;i<n; i++) {
+    var rows = i
+    var cols = 0
+    while((rows<n&& rows>=0) && (cols<n && cols>=0)) {
+      result.push(arr[rows][cols])
+      rows++
+      cols++
+    }
+  }
+  return result
+}
+
+// // 4.数组逆时针旋转45度在打印
+// function rotatearr(arr,n) {
+    
+// }
+// var arr= [
+//   [1,2,3,4],
+//   [5,6,7,8],
+//   [9,10,11,12],
+//   [13,14,15,16]
+// ]
+// console.log('结果',rotatearr(arr,4))
