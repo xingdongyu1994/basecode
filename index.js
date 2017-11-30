@@ -1,3 +1,24 @@
+function TreeNode(val) {
+  this.val = val
+  this.left = null
+  this.right = null
+}
+function CreateTreeNode(node,i,len,arr) {
+ var leftIndex = 2*i+1
+ var rightIndex = 2*i+2
+ if(leftIndex<len) {
+   var leftChildnode = new TreeNode()
+   leftChildnode.val = arr[leftIndex]
+   node.left = leftChildnode
+   CreateTreeNode(leftChildnode, leftIndex, len, arr)
+ }
+ if(leftIndex<len) {
+   var rightChildnode = new TreeNode()
+   rightChildnode.val = arr[rightIndex]
+   node.right = rightChildnode
+   CreateTreeNode(rightChildnode, rightIndex, len, arr)
+ }
+}
 //排序算法
 //1.冒泡排序
 /*
@@ -398,11 +419,6 @@ function printarr2(arr,n) {
   }
   return result
 }
-
-// // 4.数组逆时针旋转45度在打印
-// function rotatearr(arr,n) {
-    
-// }
 // var arr= [
 //   [1,2,3,4],
 //   [5,6,7,8],
@@ -410,3 +426,88 @@ function printarr2(arr,n) {
 //   [13,14,15,16]
 // ]
 // console.log('结果',rotatearr(arr,4))
+
+// 4.数组全排列
+function perm(arr) {
+  var  result = []
+  permute(arr,0)
+}
+var reuslt = []
+function permute(arr,begin) {
+  for(var i=begin; i<arr.length; i++) {
+    permswap(arr, begin, i)
+    if(begin+1<arr.length-1) {
+      permute(arr, begin+1); 
+    } else {
+      console.log("交换数组",arr)
+    }
+  }
+  
+}
+function permswap(arr,x,y) {
+   var temp = arr[x];
+   arr[x] = arr[y];
+   arr[y]  = temp;
+}
+console.log('结果',perm([1,2,3]))
+
+
+//数据结构算法
+// 1.二叉树遍历
+
+var Nodearr  = ['1','2','3','4','5','6','7']
+var Nodelen = Nodearr.length
+var Nodenode = new TreeNode()
+Nodenode.val = Nodearr[0]
+CreateTreeNode(Nodenode, 0, Nodelen, Nodearr)
+//先序遍历
+function perorderNode(node,callback) {
+  if(node !=null) {
+    callback(node.val)
+    perorderNode(node.left,callback)
+    perorderNode(node.right,callback)
+  }
+}
+//中序遍历  后序遍历 一样 digui
+//层次遍历
+
+function  leverorderNode (node) {
+  if(node == null) {
+    return null
+  }
+  var arr = []
+  arr.push(node)
+  var result = []
+  var ers = []
+  while(arr.length) {
+    var temp = arr.shift()
+    
+    result.push(temp.val)
+    if(temp.left) {
+      arr.push(temp.left)
+    }
+    if(temp.right) {
+      arr.push(temp.right)
+    }
+  }
+  
+  console.log("结果ddd111111111111",ers)
+
+}
+// console.log("树",Nodenode)
+// leverorderNode(Nodenode)
+
+//字符串  统计各个字符出现次数
+var str = "abcdedasfbcbseszd"
+function charnum(str) {
+  var json = {}
+  for(var i=0; i<str.length; i++) {
+     if(!json[str[i]]) {
+      json[str[i]]=1
+     } else {
+      json[str.charAt(i)]++
+     }
+  }
+  return json
+}
+// console.log("结果",charnum(str))
