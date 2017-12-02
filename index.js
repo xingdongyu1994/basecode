@@ -449,7 +449,80 @@ function permswap(arr,x,y) {
    arr[x] = arr[y];
    arr[y]  = temp;
 }
-console.log('结果',perm([1,2,3]))
+// console.log('结果',perm([1,2,3]))
+
+//5.自己实现一个stack  实现push   pop 等操作方法
+function Stack() {
+  this.savedata = []
+  this.top = 0  //记录栈顶位置
+}
+Stack.prototype = {
+//栈顶压入元素
+push:function(item) {
+  this.savedata[this.top++] = item
+},
+//出栈一个元素
+pop:function() {
+  var peek =this.savedata[--this.top]
+  this.savedata = this.savedata.slice(0,-1)
+  return peek
+},
+//栈顶元素
+peak:function() {
+  return this.savedata[this.top-1]
+},
+//栈内元素个数
+length:function() {
+  return this.top
+},
+//清空栈
+clear:function() {
+  this.top = 0
+}
+}
+function fact(n) {
+ var s = new Stack()
+ while(n>1) {
+   s.push(n--)
+ }
+
+ var num =1
+ while(s.length() >0) {
+   num*=s.pop()
+ }
+ return num
+}
+function ispalinrome(str) {
+ var s = new Stack()
+ Array.prototype.forEach.call(str,function(item){
+    return s.push(item)
+ })
+ var scopy = ''
+ while(s.length()>0) {
+   scopy+=s.pop()
+ }
+ return str === scopy
+}
+// console.log("回文",ispalinrome("12344321"))
+//6.二分查找
+function searchtwo(arr,item) {
+  var end = arr.length-1
+  var start = 0
+  while(start<=end) {
+    var m = Math.floor((end+start)/2)
+    if(arr[m] == item){
+       return m
+    }
+    if(item > arr[m]) {
+      start = m+1
+    } else {
+      end = m-1
+    }
+  }
+  return false
+}
+console.log('结果',searchtwo([1,2,3,4,5],4))
+
 
 
 //数据结构算法
@@ -497,7 +570,7 @@ function  leverorderNode (node) {
 // console.log("树",Nodenode)
 // leverorderNode(Nodenode)
 
-//字符串  统计各个字符出现次数
+//2.字符串  统计各个字符出现次数
 var str = "abcdedasfbcbseszd"
 function charnum(str) {
   var json = {}
@@ -511,3 +584,43 @@ function charnum(str) {
   return json
 }
 // console.log("结果",charnum(str))
+
+//3.判断一个二叉树是否是另一个二叉树的结构
+function issubtree(smain, tone) {
+  if(smain == null || tone == null) {
+    return false
+  }
+  // console.log("发的说法是打",issame(smain,tone))
+  if(issame(smain,tone)) {
+    return true
+  }
+  return issubtree(smain.left,tone) || issubtree(smain.right,tone)
+
+  
+}
+function issame(smain,tone) {
+   if(smain == null && tone == null) {
+     return true
+   }
+   if(smain != null && tone == null) {
+    return false
+   }
+   if(smain == null && tone != null) {
+    return false
+   }
+   if(smain.val != tone.val) {
+    return false
+   }
+   return issame(smain.left,tone.left)  && issame(smain.right, tone.right)
+}
+var Nodearr1  = ['1','2','3','4','5','6','7']
+var Nodelen1 = Nodearr1.length
+var Nodenode1 = new TreeNode()
+Nodenode1.val = Nodearr1[0]
+CreateTreeNode(Nodenode1, 0, Nodelen1, Nodearr1)
+var Nodearr2  = ['2','4','5']
+var Nodelen2 = Nodearr2.length
+var Nodenode2 = new TreeNode()
+Nodenode2.val = Nodearr2[0]
+CreateTreeNode(Nodenode2, 0, Nodelen2, Nodearr2)
+// console.log("结果",issubtree(Nodenode1,Nodenode2))
