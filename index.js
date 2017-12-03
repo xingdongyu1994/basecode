@@ -521,7 +521,127 @@ function searchtwo(arr,item) {
   }
   return false
 }
-console.log('结果',searchtwo([1,2,3,4,5],4))
+// console.log('结果',searchtwo([1,2,3,4,5],4))
+//7.封装一个cookie
+function setcookie(key,value,time) {
+   var curdate = new Date()
+   curdate.setDate(curdate.getDate()+time)
+   document.cookie = key+ "=" +value+"; expires=" +curdate.toDateString();
+}
+function getcookie(key) {
+  var arr = document.cookie.split('; ')
+  for(var i=0; i<arr.length; i++) {
+      var arr2 = arr[i].split('=')
+      if(arr2[0] == key) {
+         return decodeURI(arr2[1])
+      }
+  }
+}
+function removecookie(key) {
+   setcookie(key,'',-1)
+}
+
+//8.call  apply  bind  封装方法
+Function.prototype.xdy_call1 = function(context) {
+    context.con = this
+    context.con()
+    delete context.con
+}
+Function.prototype.xdy_call2 = function(context) {
+  var context = context || window
+  context.con = this
+  var newarr = []
+  var args = []
+  for(var i=1; i<arguments.length; i++) {
+     args.push('arguments['+i+']')
+  }
+  console.log("哦急急急1111111111a",eval('context.con('+args+')'))
+  delete context.con
+}
+var xdy_foo = {
+  value :1
+}
+function xdy_foofun(name,age) {
+  console.log("name",name)
+  console.log("age",age)
+  console.log('结果',this.value)
+}
+// xdy_foofun.xdy_call2(xdy_foo,'xiaoming',44)
+
+
+
+Function.prototype.bind1=function(context) {
+   var that = this
+   return function() {
+     return that.apply(context)
+   }
+}
+
+Function.prototype.bind2 = function(context) {
+   var that = this
+   var args  = Array.prototype.slice.call(arguments,1)
+   return function() {
+     var bingdargs = Array.prototype.slice.call(arguments)
+     return that.apply(context,args.concat(bingdargs))
+   }
+}
+
+Function.prototype.bind3 = function(context) {
+   if(typeof this !=='function') {
+     throw new Error('必须是函数')
+   }
+   var that = this
+   var args  = Array.prototype.slice.call(arguments,1)
+   var Obj = function () {}
+   var bindbound = function () {
+     var bingdargs = Array.prototype.slice.call(arguments)
+     return that.apply(this instanceof Obj? this : context, args.concat(bingdargs))
+   }
+   Obj.prototype = this.prototype
+   bindbound.prototype = new Obj()
+  //  console.log("这里的原型",bindbound.prototype)
+  //  console.log("法大师傅士大夫",this.prototype)
+  //  console.log("没那么，你们",bindbound)
+   return bindbound
+}
+
+
+var xdy_bar = {
+  value:1
+}
+ 
+function xdy_barfun (name,age) {
+   console.log("bind结果",this.value)
+   console.log("bindname",name)
+   console.log("bindage",age)
+}
+var bindfoor = xdy_barfun.bind3(xdy_bar,"xiaohei")
+var bingnew = new bindfoor("77")
+// console.log("bind闭包2222222222",bingnew)
+// bindfoor("xiaobai",99)
+
+// 9.new操作符实现
+function Newcreate(name,age) {
+  this.name = name
+  this.age = age
+}
+Newcreate.prototype.address='beijing'
+Newcreate.prototype.sayname = function() {
+  console.log("我叫"+this.name)
+}
+function createobject() {
+  var obj = new Object()
+  var Constructor = [].shift.call(arguments)
+  console.log("发士大夫似的",Constructor)
+  obj.__proto__ = Constructor.prototype
+  var ret = Constructor.apply(obj,arguments)
+  return typeof ret === 'object'?ret:obj
+
+}
+var person = createobject(Newcreate,'xiaobai',22)
+console.log("对象是",person)
+
+
 
 
 
@@ -624,3 +744,21 @@ var Nodenode2 = new TreeNode()
 Nodenode2.val = Nodearr2[0]
 CreateTreeNode(Nodenode2, 0, Nodelen2, Nodearr2)
 // console.log("结果",issubtree(Nodenode1,Nodenode2))
+
+//4.贪心算法   凑钱
+function getmoney(moneyarr, num) {
+  moneyarr.sort(function(a,b){
+    return b-a
+  })
+  var res = []
+  for(var i=0; i<moneyarr.length; i++) {
+   while(num>=moneyarr[i] && num>0) {
+     num = num-moneyarr[i]
+     res.push(moneyarr[i])
+   }
+  }
+  console.log("排序的",res)
+
+}
+var moneyarr =[5,1,50,20,100]
+// console.log("结果",getmoney(moneyarr,143))
