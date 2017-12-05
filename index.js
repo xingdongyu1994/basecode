@@ -639,8 +639,24 @@ function createobject() {
 
 }
 var person = createobject(Newcreate,'xiaobai',22)
-console.log("对象是",person)
-
+// console.log("对象是",person)
+// 10.js 打印五角星三角形 金字塔
+function consoleto() {
+  for (var i = 5; i > 0 ; i--) { //控制行数.
+    for ( var j = 5 ; j > 0; j--) {
+        //每行打印的个数,每行都要打印,先是打印全是星星.
+        //然后,逐渐在前面打印空格的个数,减少后面星星的个数.
+        // document.write("☆");
+        if(i>=j) {
+          document.write("☆");
+        } else {
+          document.write("&nbsp;")
+        }
+    }
+    document.write("<br />")
+  }
+}
+consoleto()
 
 
 
