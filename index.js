@@ -113,6 +113,93 @@ function merge(left, right) {
   return newarr.concat(left.length?left:right)
 }
 
+// 5.堆排序  
+/**
+ * 堆 实质上就是完全二叉树
+ * 大根堆  节点都小于父节点   小根堆 节点都大于父节点    下面建立的大根堆
+ * 几个过程    1.构建堆   2.弹出堆顶元素  3.调整堆
+ */
+function Heapsort (arr) {
+  buildheap(arr)
+  console.log("建立完后的",arr)
+  //交换第一个与最后一个  弹出元素
+  for(var i=arr.length-1; i>0; i--) {
+    swap(arr,0,i)
+    headjustheap(arr,0,i)
+  }
+  return arr
+  function buildheap (element) {
+    var len = Math.floor(element.length/2)-1
+    for(var i=len;i>=0; i--) {
+      headjustheap(element, i, element.length)
+    }
+  }
+  function headjustheap (element,index,len) {
+    var lefttree 
+    var righttree
+    var maxnode
+    while(true) {
+       lefttree = 2*index+1
+       righttree = 2*(index+1)
+       maxnode = index
+       if(lefttree<len && element[index] < element[lefttree]) {
+          maxnode = lefttree
+       }
+       if(righttree<len && element[maxnode] < element[righttree]) {
+        maxnode = righttree
+       }
+       if(maxnode == index) {
+         break
+       } else {
+        swap(element, maxnode, index)
+        index = maxnode
+       }
+    }
+  }
+  function swap(array,max, index) {
+    var temp = array[max]
+    array[max] = array[index]
+    array[index] = temp
+  }
+} 
+var heaparr = [1, 3, 4, 5, 7, 2, 6, 8, 0]
+// console.log("堆排序",Heapsort(heaparr))
+// 6.桶排序1
+ function bucketsort (arr){
+  //这里装备了11个桶
+  var pail =  new Array(11)
+  for(var i=0; i<=10; i++) {
+      pail[i] = 0
+  }
+  arr.forEach(function(x) {       //这里的做法是可以记录每个桶的个数  这样就可以实现不去重的输出
+    pail[x]++
+  })
+  var newArr = []
+  for(var i=10; i>=0; i--) {
+    for(var j=0; j<pail[i]; j++) {
+     newArr.push(i)
+    }
+  }
+   return newArr 
+ }
+ var bucketarr = [4,6,2,8]
+//  console.log("桶排序",bucketsort(bucketarr))
+//桶排序2
+function bucketsort2(arr) {   //这里必须保证去重
+  var paril = new Array(9)
+  
+  for(var i=0; i<arr.length; i++) {
+    paril[arr[i]] = arr[i]
+  }
+  var newarr =[]
+  for (var i = 0; i < paril.length; i++){
+    if (paril[i] > 0) {
+      newarr.push(i)
+    }     
+  }
+  return newarr
+}
+console.log("桶排序2",bucketsort2(bucketarr))
 
 //查找算法
 /**
