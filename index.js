@@ -199,7 +199,7 @@ function bucketsort2(arr) {   //这里必须保证去重
   }
   return newarr
 }
-console.log("桶排序2",bucketsort2(bucketarr))
+// console.log("桶排序2",bucketsort2(bucketarr))
 
 //查找算法
 /**
@@ -407,7 +407,34 @@ function resizechange () {
   console.log("改变")
 }
 
-// window.onresize = debounce(resizechange, 5000,true);
+// window.onresize = debounce(resizechange, 5000,true)
+
+//版本号排序
+function versionsort(curv,perv) {
+   var arr1 = curv.split('.')
+   var arr2 = perv.split('.')
+   var minl= Math.min(arr1.length,arr2.length)
+   console.log("此时",minl)
+   var posi =0
+   var isverq =0
+   while(posi <minl) {
+     var isverq = parseInt(arr1[posi]) - parseInt(arr2[posi])
+     if(isverq ==0) {
+       posi++
+     } else {
+       break
+     }
+   }
+   if(isverq >0) {
+      return '新版本'
+   } else if(isverq ==0) {
+      return '稳定版'
+   } else {
+      return '旧版本'
+   }
+}
+console.log("版本号排序",versionsort('5.12.3','5.12'))
+
 
 //编程
 // 1.两个升序数组中前n大的数
@@ -702,8 +729,8 @@ function xdy_barfun (name,age) {
    console.log("bindname",name)
    console.log("bindage",age)
 }
-var bindfoor = xdy_barfun.bind3(xdy_bar,"xiaohei")
-var bingnew = new bindfoor("77")
+// var bindfoor = xdy_barfun.bind3(xdy_bar,"xiaohei")
+// var bingnew = new bindfoor("77")
 // console.log("bind闭包2222222222",bingnew)
 // bindfoor("xiaobai",99)
 
@@ -725,7 +752,7 @@ function createobject() {
   return typeof ret === 'object'?ret:obj
 
 }
-var person = createobject(Newcreate,'xiaobai',22)
+// var person = createobject(Newcreate,'xiaobai',22)
 // console.log("对象是",person)
 // 10.js 打印五角星三角形 金字塔
 function consoleto() {
