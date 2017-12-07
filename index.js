@@ -832,8 +832,30 @@ function consoleto() {
   }
 }
 // consoleto()
-
-
+//12 无序数组的第k大元素
+function findk(arr, k) {
+   var leftarr = []
+   var rightarr = []
+   for(var i=1; i<arr.length; i++) {
+      if(arr[i] <=arr[0]) {
+        leftarr.push(arr[i])
+      } else {
+        rightarr.push(arr[i])
+      }
+   }
+   var len = rightarr.length 
+   if(len>=k) {
+     return findk(rightarr,k)
+   } else if(len ==k-1) {
+     return arr[0]
+   } else {
+     return findk(leftarr,k-len-1)
+   }
+   
+   console.log("结果",leftarr)
+   console.log("结果2",rightarr)
+}
+console.log("第k大的元素",findk([3,1,6,2,4,5],2))
 
 
 //数据结构算法
