@@ -433,7 +433,8 @@ function versionsort(curv,perv) {
       return '旧版本'
    }
 }
-console.log("版本号排序",versionsort('5.12.3','5.12'))
+// console.log("版本号排序",versionsort('5.12.3','5.12'))
+
 
 
 //编程
@@ -754,7 +755,67 @@ function createobject() {
 }
 // var person = createobject(Newcreate,'xiaobai',22)
 // console.log("对象是",person)
-// 10.js 打印五角星三角形 金字塔
+//10.手写深浅拷贝  clone
+
+function xdy_clone (obj) {
+  var xdy_assign = createassignclone (true)
+  if(!isobject(obj)) {
+    return obj
+  }
+  if(isarray(obj)) {
+    return obj.slice()
+  } else {
+    return xdy_assign({},obj)
+  }
+  function isobject (obj) {
+     var type = typeof obj
+     return type === 'function' || type === 'object' && !!obj
+  }
+  function isarray(obj) {
+    return Object.prototype.toString.call(obj) == '[object Array]'
+  }
+  function xdykeyarr(obj) {
+    var arrkey = []
+    for(var key in obj) {
+      if(xdyhaskey(obj,key)) {
+        arrkey.push(key)
+      }
+    }
+    return arrkey
+ }
+ function xdyhaskey(obj, key) {
+  return obj!=null && hasOwnProperty.call(obj,key)
+ }
+  function createassignclone(undefinedOnly) {
+    return function (obj) {
+      console.log("这里的是",obj)
+      var length = arguments.length
+      if(length<2|| obj== null) {
+         return obj
+      }
+      for(var i=1; i<arguments.length; i++) {
+         var srouce = arguments[i]
+         var keyarr = xdykeyarr(srouce)
+         var len = keyarr.length
+         for(var i=0; i<len; i++) {
+          var key = keyarr[i]
+          if(!undefinedOnly || obj[key] === void 0) {
+            obj[key] = srouce[key] 
+          }
+         }
+      }
+      return obj
+    }
+  }
+}
+// var clone1 = "1111111"
+var clone1 = {
+  "name":"xiaoming",
+  "age":123
+}
+// var clone2 = xdy_clone(clone1)
+
+// 11.js 打印五角星三角形 金字塔
 function consoleto() {
   for (var i = 5; i > 0 ; i--) { //控制行数.
     for ( var j = 5 ; j > 0; j--) {
@@ -770,7 +831,7 @@ function consoleto() {
     document.write("<br />")
   }
 }
-consoleto()
+// consoleto()
 
 
 
