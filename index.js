@@ -544,10 +544,24 @@ function printarr2(arr,n) {
 
 // 4.数组全排列
 function perm(arr) {
-  var  result = []
   permute(arr,0)
 }
-var reuslt = []
+// function permute(arr,begin) {
+//   for(var i=begin; i<arr.length; i++) {
+//     permswap(arr,begin,i)
+    
+//     if(begin+1<arr.length-1) {
+//       permute(arr,begin+1)
+//     } else  {
+//       console.log("这时候",arr)
+//     }
+//   }
+// }
+// function permswap(arr,x,y) {
+//   var temp = arr[x]
+//   arr[x] = arr[y]
+//   arr[y]  = temp
+// }
 function permute(arr,begin) {
   for(var i=begin; i<arr.length; i++) {
     permswap(arr, begin, i)
@@ -564,7 +578,7 @@ function permswap(arr,x,y) {
    arr[x] = arr[y];
    arr[y]  = temp;
 }
-// console.log('结果',perm([1,2,3]))
+console.log('全排列结果',perm([1,2,3]))
 
 //5.自己实现一个stack  实现push   pop 等操作方法
 function Stack() {
@@ -855,8 +869,12 @@ function findk(arr, k) {
    console.log("结果",leftarr)
    console.log("结果2",rightarr)
 }
-console.log("第k大的元素",findk([3,1,6,2,4,5],2))
+// console.log("第k大的元素",findk([3,1,6,2,4,5],2))
+//13  
+function  strperm(arr,str) {
 
+}
+console.log("字符串判断结果",strperm(['hell','well', 'hello', 'world'],'helloworld'))
 
 //数据结构算法
 // 1.二叉树遍历
