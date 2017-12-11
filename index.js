@@ -568,7 +568,7 @@ function permute(arr,begin) {
     if(begin+1<arr.length-1) {
       permute(arr, begin+1); 
     } else {
-      console.log("交换数组",arr)
+      // console.log("交换数组",arr)
     }
   }
   
@@ -870,11 +870,8 @@ function findk(arr, k) {
    console.log("结果2",rightarr)
 }
 // console.log("第k大的元素",findk([3,1,6,2,4,5],2))
-//13  
-function  strperm(arr,str) {
+  
 
-}
-console.log("字符串判断结果",strperm(['hell','well', 'hello', 'world'],'helloworld'))
 
 //数据结构算法
 // 1.二叉树遍历
@@ -993,3 +990,115 @@ function getmoney(moneyarr, num) {
 }
 var moneyarr =[5,1,50,20,100]
 // console.log("结果",getmoney(moneyarr,143))
+
+
+/**
+ *  手撕代码
+ */
+// 1.手撕clone
+function hand_clone(obj) {
+   var hand_assign = handcreateobj(true)
+   if(!handisobject(obj)) {
+     return obj
+   }
+   if(handisarray(obj)) {
+     return obj.slice()
+   } else {
+    return hand_assign({},obj)
+   }
+   function handcreateobj(und) {
+    return function(obj) {
+      console.log("里面的参数",arguments)
+      var len = arguments.length
+      if(len<2 || obj== null) {
+       return obj
+      } 
+      else {
+        for(var i=1; i<arguments.length; i++) {
+          var srouce = arguments[i]
+          var keyarr = handkeyarr(srouce)
+          var len = keyarr.length
+          for(var i=0; i<len; i++) {
+           var key = keyarr[i]
+           if(!und || obj[key] === void 0) {
+             obj[key] = srouce[key] 
+           }
+          }
+        }
+        return obj
+      }
+    }
+   }
+   function handkeyarr(obj) {
+     var arr = []
+     for(var key in obj) {
+       if(isallkey(obj,key)){
+        arr.push(key)
+       }
+     }
+     return arr
+    }
+ 
+   function isallkey(obj, key) {
+     return obj!=null && hasOwnProperty.call(obj,key)
+   }
+   function handisarray(obj) {
+     return Object.prototype.toString.call(obj) == '[object Array]'
+   }
+   function handisobject(obj) {
+     var type = typeof  obj
+     return type === 'function' || type === 'object' && !!obj
+   }
+}
+var hand1 = {
+  "name":"xiaoming",
+  "age":'123'
+}
+// var hand1res = hand_clone(hand1) 
+
+//2.堆排序
+function swap(item, x, y){
+  var temp = item[x]
+  item[x] = item[y]
+  item[y] = temp
+}
+function handheapsort(arr) {
+   //构建一个 大定堆
+   buildhadheap(arr)
+   
+   for(var i=arr.length-1; i>0;i-- ) {
+     swap(arr,0, i)
+     buildswpaheap(arr,0,i)
+   }
+    return arr
+   function buildhadheap(item) {
+     var len = Math.floor(item.length/2) -1
+     for(var i=len; i>=0;i--) {
+       buildswpaheap(item, i,item.length)
+     }
+   } 
+   function buildswpaheap(element, index, len) {
+    var lefttree 
+    var righttree
+    var maxnode
+    while(true) {
+       lefttree = 2*index+1
+       righttree = 2*(index+1)
+       maxnode = index
+       if(lefttree<len && element[index] < element[lefttree]) {
+          maxnode = lefttree
+       }
+       if(righttree<len && element[maxnode] < element[righttree]) {
+        maxnode = righttree
+       }
+       if(maxnode == index) {
+         break
+       } else {
+        swap(element, maxnode, index)
+        index = maxnode
+       }
+    }
+   } 
+}
+// console.log("堆排序",handheapsort([1, 3, 4, 5, 7, 2, 6, 8, 0]))
+
