@@ -517,6 +517,7 @@ function printarr2(arr,n) {
     var rows = 0
     var cols = i
     while((rows<n&& rows>=0) && (cols<n && cols>=0)) {
+
       result.push(arr[rows][cols])
       rows++
       cols++
@@ -871,6 +872,34 @@ function findk(arr, k) {
 }
 // console.log("第k大的元素",findk([3,1,6,2,4,5],2))
   
+// 13. 手写一个jsonp
+function xdy_jsonpCallback(data) {
+  console.log(data)
+}
+function xdy_jsonp(url,data,callback) {
+  // 1.将url转为字符串xingshi
+  var datastring = url.indexOf('?') == -1? '?': '&'
+  for(var key in data){
+    datastring += key + '=' + data[key] + '&'
+  }
+  //2.处理回调函数
+  var cbFuncName = 'xdy_jsonpCallback'
+  datastring += 'callback=' + cbFuncName;
+  console.log("这里是的ulr",datastring)
+  //3.创建src
+  var scriptEle = document.createElement('script')
+  scriptEle.src = url + datastring
+  console.log("答案",scriptEle)
+  // 4.挂在全局
+  window[cbFuncName] = function (data) {
+    callback(data);
+    document.body.removeChild(scriptEle)
+  }
+
+  // 5.添加到页面中
+   document.body.appendChild(scriptEle)
+}
+// console.log("jsonp答案",xdy_jsonp("http:localhost:7000",{id:1,name:'zhangsan'},'xdy_jsonpCallback'))
 
 
 //数据结构算法
