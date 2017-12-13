@@ -1020,6 +1020,23 @@ function getmoney(moneyarr, num) {
 var moneyarr =[5,1,50,20,100]
 // console.log("结果",getmoney(moneyarr,143))
 
+//5.回溯算法
+function solution(){
+  var tem = []
+
+  allsum(tem,1)
+
+  function allsum(tem,pos) {
+    for(var i=pos; i<=3; i++) {
+      tem.push(i)
+      console.log("中间的结果",tem)
+      allsum(tem,i+1)
+    }
+  }
+  
+}
+
+console.log("回溯答案",solution())
 
 /**
  *  手撕代码
