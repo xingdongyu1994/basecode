@@ -1036,7 +1036,7 @@ function solution(){
   
 }
 
-console.log("回溯答案",solution())
+// console.log("回溯答案",solution())
 
 /**
  *  手撕代码
@@ -1147,4 +1147,53 @@ function handheapsort(arr) {
    } 
 }
 // console.log("堆排序",handheapsort([1, 3, 4, 5, 7, 2, 6, 8, 0]))
-
+//3.封装一个异步队列
+var oBtn = document.querySelector("input")
+var oBox = document.querySelector("#box")
+var createnode = (function(){
+  var num = 0
+  return function () {
+    var oli = document.createElement("li")
+    oli.innerHTML = num++
+    return oli
+  }
+  
+})()
+function createaddnode() {
+  var onode = oBox.appendChild(createnode())
+  var time = null
+  if(onode.innerHTML <9) {
+     time = setTimeout(createaddnode, 1000)
+  } else {
+    clearTimeout(time)
+  }
+}
+oBtn.onclick = function() {
+  createaddnode()
+}
+var Queueclick = function() {
+  this.list = []
+}
+Queueclick.prototype = {
+   Constructor: Queueclick,
+   enQueue:function(fn) {
+      this.list.push(fn)
+      return this
+   },
+   deQueue:function() {
+     var fn = this.list.shift() ||  function () {}
+     fn.apply(this,arguments)
+   }
+}
+// var qu = new Queueclick()
+// qu.enQueue(function() {
+//   console.log("进去")
+// }).enQueue(function(){
+//   console.log("进去2")
+// }).enQueue(function(){
+//   console.log("进去3")
+// }).deQueue()
+// while(qu.list.length) {
+//   qu.deQueue()
+// }
+// console.log("最后的是",qu)
