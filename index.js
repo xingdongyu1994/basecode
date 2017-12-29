@@ -579,7 +579,7 @@ function permswap(arr,x,y) {
    arr[x] = arr[y];
    arr[y]  = temp;
 }
-console.log('全排列结果',perm([1,2,3]))
+// console.log('全排列结果',perm([1,2,3]))
 
 //5.自己实现一个stack  实现push   pop 等操作方法
 function Stack() {
@@ -900,7 +900,70 @@ function xdy_jsonp(url,data,callback) {
    document.body.appendChild(scriptEle)
 }
 // console.log("jsonp答案",xdy_jsonp("http:localhost:7000",{id:1,name:'zhangsan'},'xdy_jsonpCallback'))
+// 14. promise  红黄绿灯亮
+function red() {
+  console.log("red")
+}
+function green() {
+  console.log("green")
+}
+function yellow() {
+  console.log("yellow")
+}
+function setp(awit,fn){
+  return  new Promise(function(resolve,reject) {
+    setTimeout(function(){
+      fn()
+      resolve()
+    },awit)
+  })
+ 
+}
+var  mypromise =  new Promise(function(resolve,reject){
+    resolve()
+})
+function promsiergr(mypromise) {
+  mypromise.then(function(){
+    return setp(3000,red)
+ }).then(function(){
+   return setp(1000,green)
+ }).then(function(){
+   return setp(2000,yellow)
+ }).then(function() {
+  promsiergr(mypromise)
+ })
+}
+// promsiergr(mypromise)
 
+//15 mife
+function repeat (func, nums, wait) {
+  return new Promise(function(resolve, reject){
+    setTimeout(function(){
+      func()
+      if(nums<2) {
+        reject()
+      } else {
+        resolve()
+      }  
+    },wait)
+  })
+}
+function output(){
+  console.log("hello")
+}
+var repeatpromise =  new Promise(function(resolve,reject){
+    resolve()
+})
+function repeatstep(pro,nums) {
+   pro.then(function(){
+      return repeat(output,nums,3000)
+   }).then(function(){
+    repeatstep(pro,nums-1)
+   }).catch(function(){
+    console.log("结束")
+  })
+}
+repeatstep(repeatpromise,4)
 
 //数据结构算法
 // 1.二叉树遍历
